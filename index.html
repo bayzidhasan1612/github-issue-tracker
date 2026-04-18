@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- title and favicon -->
+    <title>Github Issue Tracker</title>
+    <link
+      rel="shortcut icon"
+      href="./assets/github-logo.png"
+      type="image/x-icon"
+    />
+
+    <!-- tailwind+daisyUI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Fonts related -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <section>
+      <div
+        class="flex justify-center items-center w-11/12 mx-auto py-15"
+      >
+        <fieldset
+          class="fieldset bg-white border-base-300 rounded-box w-full max-w-md border p-4 "
+        >
+          <div class="flex justify-center mb-6">
+            <img src="./assets/github-logo.png" alt="" />
+          </div>
+          <div class="text-center mb-6">
+            <h2 class="text-2xl font-semibold mb-1">GitHub Issues Tracker</h2>
+            <p class="text-gray-500 text-[16px] font-light">
+              Sign in to manage your issues
+            </p>
+          </div>
+
+          <label class="label text-black">Username</label>
+          <input
+            type="text"
+            class="input w-full"
+            placeholder="Enter Username"
+          />
+          <label class="label text-[#4A00FF]">Default: admin</label>
+
+          <label class="label text-black">Password</label>
+          <input
+            type="password"
+            class="input w-full"
+            placeholder="Enter Password"
+          />
+          <label class="label text-[#4A00FF]">Default: admin123</label>
+
+          <button class="btn btn-primary my-4">Sign In</button>
+
+          <div class="space-y-5">
+            <div class="text-center text-[16px] font-light">OR</div>
+            <h2 class="text-center text-[14px] mb-2 text-gray-500">
+              Demo Credentials:
+            </h2>
+
+            <div
+              class="text-center bg-gray-50 border-base-300 rounded-box border py-4 text-[16px]"
+            >
+              <h2><span class="font-bold">Username: </span>admin</h2>
+              <h2><span class="font-bold">Password </span>admin123</h2>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </section>
+  </body>
+</html>
