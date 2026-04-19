@@ -46,17 +46,15 @@ const loadAllIssue = () => {
 //     "createdAt": "2024-01-17T16:00:00Z",
 //     "updatedAt": "2024-01-17T16:00:00Z"
 // }
-const getPriorityClass =(priority)=>{
-    if(priority === "high"){
-        return "bg-[#FEECEC] border-[#FECACA] text-[#EF4444]"
-    }
-    else if(priority === "medium"){
-        return "bg-[#FDE0A0] border-[#FDE0A0] text-[#F59E0B]"
-    }
-    else{
-        return "bg-[#DADCE1] border-[#DADCE1] text-[#9CA3AF]"
-    }
-}
+const getPriorityClass = (priority) => {
+  if (priority === "high") {
+    return "bg-[#FEECEC] border-[#FECACA] text-[#EF4444]";
+  } else if (priority === "medium") {
+    return "bg-[#FDE0A0] border-[#FDE0A0] text-[#F59E0B]";
+  } else {
+    return "bg-[#DADCE1] border-[#DADCE1] text-[#9CA3AF]";
+  }
+};
 
 const displayIssues = (issues) => {
   console.log(issues);
@@ -69,7 +67,7 @@ const displayIssues = (issues) => {
     const btnAll = document.createElement("div");
     btnAll.innerHTML = `
             <div>
-          <div class="shadow-sm rounded-md px-5 py-4">
+          <div class="shadow-sm ${issue.status === "closed" ? "border-purple-500 border-t-4" : "border-green-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
                 <img src="${issue.priority === "low" ? "./assets/Closed-Status.png" : "./assets/Open-Status.png"}" alt="" />
