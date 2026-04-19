@@ -9,14 +9,99 @@ const switchTab = (tab) => {
 
   for (const tabs of allTab) {
     const tabName = document.getElementById(tabs + "-btn");
-    console.log(tabName);
+    // console.log(tabName);
 
     if (tabs === tab) {
       tabName.classList.remove(...inActive);
       tabName.classList.add(...active);
     } else {
-        tabName.classList.remove(...active);
-        tabName.classList.add(...inActive);
+      tabName.classList.remove(...active);
+      tabName.classList.add(...inActive);
     }
   }
 };
+
+switchTab(currentTab);
+
+const loadAllIssue = () => {
+  const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayIssues(data.data));
+};
+
+// {
+//     "id": 30,
+//     "title": "Fix timezone display issues",
+//     "description": "Timestamps are showing in UTC instead of user's local timezone. Need to add timezone conversion.",
+//     "status": "open",
+//     "labels": [
+//         "bug",
+//         "good first issue"
+//     ],
+//     "priority": "low",
+//     "author": "time_tony",
+//     "assignee": "",
+//     "createdAt": "2024-01-17T16:00:00Z",
+//     "updatedAt": "2024-01-17T16:00:00Z"
+// }
+
+const displayIssues = (issues) => {
+  console.log(issues);
+  // 1.get the container and empty it
+  const allIssueContainer = document.getElementById("all-issue-container");
+  allIssueContainer.innerHTML = "";
+  // 2. get into every issues
+  for (let issue of issues) {
+    // 3. create element
+    const btnAll = document.createElement("div");
+    btnAll.innerHTML = `
+            <div>
+          <div class="shadow-sm rounded-md px-5 py-4">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <img src="${issue.priority === "low" ? "./assets/Closed-Status.png" : "./assets/Open-Status.png"}" alt="" />
+              </div>
+              <button
+                class="border-[#FECACA] rounded-full px-10 py-1 bg-[#FEECEC] text-[#EF4444]"
+              >
+                ${issue.priority}
+              </button>
+            </div>
+            <h2 class="font-semibold text-xl">
+              ${issue.title}
+            </h2>
+            <p class="text-gray-500 my-3">
+              ${issue.description}
+            </p>
+
+            <div class="flex justify-start items-start gap-2">
+              <button
+                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
+                ><span class="text-[#EF4444]"
+                  ><i class="fa-solid fa-bug"></i
+                ></span>
+                <span class="text-[#EF4444] font-semibold">BUG</span>
+              </button>
+              <button
+                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
+                ><span class="text-[#D97706]"
+                  ><i class="fa-solid fa-life-ring"></i
+                ></span>
+                <span class="text-[#D97706] font-semibold">HELP WANTED</span>
+              </button>
+            </div>
+          </div>
+          <div class="shadow-sm rounded-md px-5 py-2 text-[#64748B]">
+            <p class="mb-2">${issue.author}</p>
+            <p> ${issue.createdAt} </p>
+          </div>
+        </div>
+        `;
+    // 4. append it to the container
+    allIssueContainer.append(btnAll);
+  }
+};
+
+loadAllIssue();
