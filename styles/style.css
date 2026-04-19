@@ -1,4 +1,8 @@
-*{
-    font-family: "Geist", sans-serif;
-    
+* {
+  font-family: "Geist", sans-serif;
+}
+
+.active{
+    background-color: #4A00FF;
+    color: white;
 }
