@@ -46,6 +46,17 @@ const loadAllIssue = () => {
 //     "createdAt": "2024-01-17T16:00:00Z",
 //     "updatedAt": "2024-01-17T16:00:00Z"
 // }
+const getPriorityClass =(priority)=>{
+    if(priority === "high"){
+        return "bg-[#FEECEC] border-[#FECACA] text-[#EF4444]"
+    }
+    else if(priority === "medium"){
+        return "bg-[#FDE0A0] border-[#FDE0A0] text-[#F59E0B]"
+    }
+    else{
+        return "bg-[#DADCE1] border-[#DADCE1] text-[#9CA3AF]"
+    }
+}
 
 const displayIssues = (issues) => {
   console.log(issues);
@@ -64,7 +75,7 @@ const displayIssues = (issues) => {
                 <img src="${issue.priority === "low" ? "./assets/Closed-Status.png" : "./assets/Open-Status.png"}" alt="" />
               </div>
               <button
-                class="border-[#FECACA] rounded-full px-10 py-1 bg-[#FEECEC] text-[#EF4444]"
+                class="uppercase rounded-full px-5 py-1  ${getPriorityClass(issue.priority)}"
               >
                 ${issue.priority}
               </button>
