@@ -23,6 +23,20 @@ const switchTab = (tab) => {
 
 switchTab(currentTab);
 
+const allBtnClicked = () => {
+  switchTab("all");
+  loadAllIssue();
+};
+
+const openBtnClicked = () => {
+  switchTab("open");
+  openIssues();
+};
+
+const closedBtnClick = () => {
+  switchTab("closed");
+};
+
 const loadAllIssue = () => {
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
@@ -57,7 +71,7 @@ const getPriorityClass = (priority) => {
 };
 
 const displayIssues = (issues) => {
-  console.log(issues);
+  //   console.log(issues);
   // 1.get the container and empty it
   const allIssueContainer = document.getElementById("all-issue-container");
   allIssueContainer.innerHTML = "";
@@ -111,6 +125,28 @@ const displayIssues = (issues) => {
     // 4. append it to the container
     allIssueContainer.append(btnAll);
   }
+};
+
+const openIssues = () => {
+  const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const issue = data.data;
+      console.log(issue);
+
+      // filter open issues
+      const openIssues = issue.filter((issue) => issue.status === "open");
+      displayOpenIssues(openIssues);
+    });
+};
+
+const displayOpenIssues = (openIssues) => {
+  console.log(openIssues);
+
+  const openIssuesContainer = document.getElementById("all-issue-container");
+  openIssuesContainer.innerHTML = "";
 };
 
 loadAllIssue();

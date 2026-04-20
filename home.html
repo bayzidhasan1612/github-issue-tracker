@@ -67,21 +67,21 @@
     >
       <div class="flex gap-3">
         <button
-          onclick="switchTab('all')"
+          onclick="allBtnClicked()"
           id="all-btn"
           class="btn btn-soft btn-primary px-10 py-2"
         >
           All
         </button>
         <button
-          onclick="switchTab('open')"
+          onclick="openBtnClicked()"
           id="open-btn"
           class="btn btn-soft btn-primary px-10 py-2"
         >
           Open
         </button>
         <button
-          onclick="switchTab('closed')"
+          onclick="closedBtnClick()"
           id="closed-btn"
           class="btn btn-soft btn-primary px-10 py-2"
         >
@@ -136,6 +136,11 @@
         <!-- issue card -->
       </div>
     </section>
+
+    <!-- open issues -->
+     <section class="container w-11/12 mx-auto border border-white p-6 mt-1 bg-base-100 shadow-sm rounded-sm hidden">
+
+     </section>
 
     <!-- modal -->
     <!-- Open the modal using ID.showModal() method -->
