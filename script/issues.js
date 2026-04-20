@@ -35,6 +35,7 @@ const openBtnClicked = () => {
 
 const closedBtnClick = () => {
   switchTab("closed");
+  closedIssues();
 };
 
 const loadAllIssue = () => {
@@ -134,7 +135,7 @@ const openIssues = () => {
     .then((res) => res.json())
     .then((data) => {
       const issue = data.data;
-      console.log(issue);
+      //   console.log(issue);
 
       // filter open issues
       const openIssues = issue.filter((issue) => issue.status === "open");
@@ -196,6 +197,78 @@ const displayOpenIssues = (openIssues) => {
     `;
     // append it
     openIssuesContainer.append(btnOpen);
+  }
+};
+
+const closedIssues = () => {
+  const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const issue = data.data;
+      //   console.log(issue);
+
+      // filter open issues
+      const closedIssues = issue.filter((issue) => issue.status === "closed");
+      displayClosedIssues(closedIssues);
+    });
+};
+
+const displayClosedIssues = (closedIssues) => {
+  console.log(closedIssues);
+
+  const closedIssuesContainer = document.getElementById("all-issue-container");
+  closedIssuesContainer.innerHTML = "";
+
+  for (let issue of closedIssues) {
+    // 3. create element
+    const btnClosed = document.createElement("div");
+    btnClosed.innerHTML = `
+     <div>
+          <div class="shadow-sm ${"border-purple-500 border-t-4"} rounded-md px-5 py-4">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <img src="${"./assets/Closed-Status.png"}" alt="" />
+              </div>
+              <button
+                class="uppercase rounded-full px-5 py-1  ${getPriorityClass(issue.priority)}"
+              >
+                ${issue.priority}
+              </button>
+            </div>
+            <h2 class="font-semibold text-xl">
+              ${issue.title}
+            </h2>
+            <p class="text-gray-500 my-3">
+              ${issue.description}
+            </p>
+
+            <div class="flex justify-start items-start gap-2">
+              <button
+                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
+                ><span class="text-[#EF4444]"
+                  ><i class="fa-solid fa-bug"></i
+                ></span>
+                <span class="text-[#EF4444] font-semibold">BUG</span>
+              </button>
+              <button
+                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
+                ><span class="text-[#D97706]"
+                  ><i class="fa-solid fa-life-ring"></i
+                ></span>
+                <span class="text-[#D97706] font-semibold">HELP WANTED</span>
+              </button>
+            </div>
+          </div>
+          <div class="shadow-sm rounded-md px-5 py-2 text-[#64748B]">
+            <p class="mb-2">${issue.author}</p>
+            <p> ${issue.createdAt} </p>
+          </div>
+        </div>
+    `;
+    // append it
+    closedIssuesContainer.append(btnClosed);
   }
 };
 
