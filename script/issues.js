@@ -84,7 +84,7 @@ const displayIssues = (issues) => {
           <div class="shadow-sm ${issue.status === "closed" ? "border-purple-500 border-t-4" : "border-green-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
-                <img src="${issue.priority === "low" ? "./assets/Closed-Status.png" : "./assets/Open-Status.png"}" alt="" />
+                <img src="${issue.status === "closed" ? "./assets/Closed-Status.png" : "./assets/Open-Status.png"}" alt="" />
               </div>
               <button
                 class="uppercase rounded-full px-5 py-1  ${getPriorityClass(issue.priority)}"
@@ -147,6 +147,56 @@ const displayOpenIssues = (openIssues) => {
 
   const openIssuesContainer = document.getElementById("all-issue-container");
   openIssuesContainer.innerHTML = "";
+
+  for (let issue of openIssues) {
+    // 3. create element
+    const btnOpen = document.createElement("div");
+    btnOpen.innerHTML = `
+     <div>
+          <div class="shadow-sm ${"border-green-500 border-t-4"} rounded-md px-5 py-4">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <img src="${"./assets/Open-Status.png"}" alt="" />
+              </div>
+              <button
+                class="uppercase rounded-full px-5 py-1  ${getPriorityClass(issue.priority)}"
+              >
+                ${issue.priority}
+              </button>
+            </div>
+            <h2 class="font-semibold text-xl">
+              ${issue.title}
+            </h2>
+            <p class="text-gray-500 my-3">
+              ${issue.description}
+            </p>
+
+            <div class="flex justify-start items-start gap-2">
+              <button
+                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
+                ><span class="text-[#EF4444]"
+                  ><i class="fa-solid fa-bug"></i
+                ></span>
+                <span class="text-[#EF4444] font-semibold">BUG</span>
+              </button>
+              <button
+                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
+                ><span class="text-[#D97706]"
+                  ><i class="fa-solid fa-life-ring"></i
+                ></span>
+                <span class="text-[#D97706] font-semibold">HELP WANTED</span>
+              </button>
+            </div>
+          </div>
+          <div class="shadow-sm rounded-md px-5 py-2 text-[#64748B]">
+            <p class="mb-2">${issue.author}</p>
+            <p> ${issue.createdAt} </p>
+          </div>
+        </div>
+    `;
+    // append it
+    openIssuesContainer.append(btnOpen);
+  }
 };
 
 loadAllIssue();
