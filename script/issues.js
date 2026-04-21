@@ -3,13 +3,10 @@ const active = ["btn", "btn-primary"];
 const inActive = ["btn", "btn-soft", "btn-primary"];
 
 const switchTab = (tab) => {
-  // console.log(tab);
-
   const allTab = ["all", "open", "closed"];
 
   for (const tabs of allTab) {
     const tabName = document.getElementById(tabs + "-btn");
-    // console.log(tabName);
 
     if (tabs === tab) {
       tabName.classList.remove(...inActive);
@@ -70,7 +67,6 @@ const getPriorityClass = (priority) => {
 };
 
 const displayIssues = (issues) => {
-  //   console.log(issues);
   numberOfIssues(issues);
   // 1.get the container and empty it
   const allIssueContainer = document.getElementById("all-issue-container");
@@ -135,25 +131,7 @@ const loadIssueDetails = async (id) => {
   displayIssueDetails(details.data);
 };
 
-// {
-//     "id": 1,
-//     "title": "Fix navigation menu on mobile devices",
-//     "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
-//     "status": "open",
-//     "labels": [
-//         "bug",
-//         "help wanted"
-//     ],
-//     "priority": "high",
-//     "author": "john_doe",
-//     "assignee": "jane_smith",
-//     "createdAt": "2024-01-15T10:30:00Z",
-//     "updatedAt": "2024-01-15T10:30:00Z"
-// }
-
 const displayIssueDetails = (issue) => {
-  console.log(issue);
-
   const detailsBox = document.getElementById("details-container");
   detailsBox.innerHTML = `
     <h2 class="font-bold text-2xl mb-4">${issue.title}</h2>
@@ -213,7 +191,6 @@ const openIssues = () => {
     .then((res) => res.json())
     .then((data) => {
       const issue = data.data;
-      //   console.log(issue);
 
       // filter open issues
       const openIssues = issue.filter((issue) => issue.status === "open");
@@ -223,8 +200,6 @@ const openIssues = () => {
 };
 
 const displayOpenIssues = (openIssues) => {
-  console.log(openIssues);
-
   const openIssuesContainer = document.getElementById("all-issue-container");
   openIssuesContainer.innerHTML = "";
 
@@ -295,8 +270,6 @@ const closedIssues = () => {
 };
 
 const displayClosedIssues = (closedIssues) => {
-  console.log(closedIssues);
-
   const closedIssuesContainer = document.getElementById("all-issue-container");
   closedIssuesContainer.innerHTML = "";
 
@@ -353,7 +326,6 @@ loadAllIssue();
 document.getElementById("search-btn").addEventListener("click", () => {
   const input = document.getElementById("search-input");
   const searchValue = input.value.trim().toLowerCase();
-  // console.log(searchValue)
 
   fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
