@@ -46,21 +46,6 @@ const loadAllIssue = () => {
     .then((data) => displayIssues(data.data));
 };
 
-// {
-//     "id": 30,
-//     "title": "Fix timezone display issues",
-//     "description": "Timestamps are showing in UTC instead of user's local timezone. Need to add timezone conversion.",
-//     "status": "open",
-//     "labels": [
-//         "bug",
-//         "good first issue"
-//     ],
-//     "priority": "low",
-//     "author": "time_tony",
-//     "assignee": "",
-//     "createdAt": "2024-01-17T16:00:00Z",
-//     "updatedAt": "2024-01-17T16:00:00Z"
-// }
 const getPriorityClass = (priority) => {
   if (priority === "high") {
     return "bg-[#FEECEC] border-[#FECACA] text-[#EF4444]";
@@ -71,13 +56,9 @@ const getPriorityClass = (priority) => {
   }
 };
 
-const displayIssuesInfo = () => {
-  const issueInfo = document.getElementById("issue-info");
-  issueInfo.innerHTML = "";
-};
-
 const displayIssues = (issues) => {
   //   console.log(issues);
+  numberOfIssues(issues);
   // 1.get the container and empty it
   const allIssueContainer = document.getElementById("all-issue-container");
   allIssueContainer.innerHTML = "";
@@ -129,6 +110,10 @@ const displayIssues = (issues) => {
   }
 };
 
+const numberOfIssues = (issues) => {
+  document.getElementById("issue-number").innerText = issues.length + " Issues";
+};
+
 const loadIssueDetails = async (id) => {
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
   const res = await fetch(url);
@@ -163,7 +148,7 @@ const displayIssueDetails = (issue) => {
             <p class="font-light text-[12px] text-gray-500">
               Opened by <span class="font-semibold text-black">${issue.author}</span>
             </p>
-            <p class="font-light text-[12px] text-gray-500">22/02/2026</p>
+            <p class="font-light text-[12px] text-gray-500">${issue.createdAt}</p>
           </div>
           <div class="flex justify-start items-start gap-2 mb-4">
             <div>
@@ -217,6 +202,7 @@ const openIssues = () => {
       // filter open issues
       const openIssues = issue.filter((issue) => issue.status === "open");
       displayOpenIssues(openIssues);
+      numberOfIssues(openIssues);
     });
 };
 
@@ -286,7 +272,7 @@ const closedIssues = () => {
       const closedIssues = issue.filter((issue) => issue.status === "closed");
 
       displayClosedIssues(closedIssues);
-      console.log(closedIssues.length);
+      numberOfIssues(closedIssues);
     });
 };
 
