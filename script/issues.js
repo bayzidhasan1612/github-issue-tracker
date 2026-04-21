@@ -23,6 +23,18 @@ const switchTab = (tab) => {
 
 switchTab(currentTab);
 
+const manageSpinner = (status) => {
+  if (status === true) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("all-issues").classList.add("hidden");
+    document.getElementById("issue-info").classList.add("hidden");
+  } else {
+    document.getElementById("all-issues").classList.remove("hidden");
+    document.getElementById("issue-info").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("hidden");
+  }
+};
+
 const allBtnClicked = () => {
   switchTab("all");
   loadAllIssue();
@@ -39,6 +51,7 @@ const closedBtnClick = () => {
 };
 
 const loadAllIssue = () => {
+  manageSpinner(true);
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
   fetch(url)
@@ -108,6 +121,7 @@ const displayIssues = (issues) => {
     // 4. append it to the container
     allIssueContainer.append(btnAll);
   }
+  manageSpinner(false);
 };
 
 const numberOfIssues = (issues) => {
@@ -187,10 +201,12 @@ const displayIssueDetails = (issue) => {
             </div>
           </div>
     `;
+
   document.getElementById("issue_modal").showModal();
 };
 
 const openIssues = () => {
+  manageSpinner(true);
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
   fetch(url)
@@ -257,9 +273,11 @@ const displayOpenIssues = (openIssues) => {
     // append it
     openIssuesContainer.append(btnOpen);
   }
+  manageSpinner(false);
 };
 
 const closedIssues = () => {
+  manageSpinner(true);
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
   fetch(url)
@@ -327,6 +345,23 @@ const displayClosedIssues = (closedIssues) => {
     // append it
     closedIssuesContainer.append(btnClosed);
   }
+  manageSpinner(false);
 };
 
 loadAllIssue();
+
+document.getElementById("search-btn").addEventListener("click", () => {
+  const input = document.getElementById("search-input");
+  const searchValue = input.value.trim().toLowerCase();
+  // console.log(searchValue)
+
+  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then((res) => res.json())
+    .then((data) => {
+      const allIssue = data.data;
+      const filterIssue = allIssue.filter((issue) =>
+        issue.title.toLowerCase().includes(searchValue),
+      );
+      displayIssues(filterIssue);
+    });
+});

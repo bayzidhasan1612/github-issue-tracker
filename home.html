@@ -53,9 +53,9 @@
           <label class="input">
             <i class="fa-brands fa-sistrix text-gray-500"></i>
 
-            <input type="search" required placeholder="Search Issues" />
+            <input id="search-input" type="search" required placeholder="Search Issues" />
           </label>
-          <button class="btn btn-primary">Search</button>
+          <button id="search-btn" class="btn btn-primary">Search</button>
         </div>
       </div>
     </header>
@@ -89,6 +89,11 @@
         </button>
       </div>
     </section>
+
+    <!-- Loading Spinner -->
+     <section id="spinner" class="flex justify-center items-center py-20 hidden">
+      <span class="loading loading-spinner loading-xl"></span>
+     </section>
 
     <!-- Issue Information section -->
     <section
@@ -128,6 +133,7 @@
 
     <!-- All issues -->
     <section
+    id="all-issues"
       class="container w-11/12 mx-auto border border-white p-6 mt-1 bg-base-100 shadow-sm rounded-sm"
     >
       <div
@@ -150,9 +156,7 @@
     <!-- </button> -->
     <dialog id="issue_modal" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box max-w-3xl">
-        <div id="details-container">
-          
-        </div>
+        <div id="details-container"></div>
 
         <div class="modal-action">
           <form method="dialog">
