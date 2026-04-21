@@ -159,9 +159,9 @@ const displayIssueDetails = (issue) => {
   detailsBox.innerHTML = `
     <h2 class="font-bold text-2xl mb-4">${issue.title}</h2>
           <div class="flex gap-5 items-center mb-4">
-            <p class="rounded-full px-2 text-white bg-green-600">${issue.status}</p>
+            <p class="rounded-full px-2 text-white ${issue.status === "closed" ? "bg-purple-500" : "bg-green-500"}">${issue.status}</p>
             <p class="font-light text-[12px] text-gray-500">
-              Opened by Fahim Ahmed
+              Opened by <span class="font-semibold text-black">${issue.author}</span>
             </p>
             <p class="font-light text-[12px] text-gray-500">22/02/2026</p>
           </div>
@@ -230,7 +230,7 @@ const displayOpenIssues = (openIssues) => {
     // 3. create element
     const btnOpen = document.createElement("div");
     btnOpen.innerHTML = `
-     <div onclick="loadIssueDetails()">
+     <div onclick="loadIssueDetails(${issue.id})">
           <div class="shadow-sm ${"border-green-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
@@ -300,7 +300,7 @@ const displayClosedIssues = (closedIssues) => {
     // 3. create element
     const btnClosed = document.createElement("div");
     btnClosed.innerHTML = `
-     <div onclick="loadIssueDetails()">
+     <div onclick="loadIssueDetails(${issue.id})">
           <div  class="shadow-sm ${"border-purple-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
