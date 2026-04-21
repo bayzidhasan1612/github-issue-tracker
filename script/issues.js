@@ -71,6 +71,11 @@ const getPriorityClass = (priority) => {
   }
 };
 
+const displayIssuesInfo = () => {
+  const issueInfo = document.getElementById("issue-info");
+  issueInfo.innerHTML = "";
+};
+
 const displayIssues = (issues) => {
   //   console.log(issues);
   // 1.get the container and empty it
@@ -81,8 +86,8 @@ const displayIssues = (issues) => {
     // 3. create element
     const btnAll = document.createElement("div");
     btnAll.innerHTML = `
-            <div>
-          <div class="shadow-sm ${issue.status === "closed" ? "border-purple-500 border-t-4" : "border-green-500 border-t-4"} rounded-md px-5 py-4">
+            <div onclick="loadIssueDetails(${issue.id})">
+          <div  class="shadow-sm ${issue.status === "closed" ? "border-purple-500 border-t-4" : "border-green-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
                 <img src="${issue.status === "closed" ? "./assets/Closed-Status.png" : "./assets/Open-Status.png"}" alt="" />
@@ -102,18 +107,14 @@ const displayIssues = (issues) => {
 
             <div class="flex justify-start items-start gap-2">
               <button
-                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
-                ><span class="text-[#EF4444]"
-                  ><i class="fa-solid fa-bug"></i
-                ></span>
-                <span class="text-[#EF4444] font-semibold">BUG</span>
+                class="border-2 border-[#FECACA] rounded-full px-1  bg-[#FEECEC]"
+                >
+                <span class="text-[#EF4444] ">${issue.labels[0]}</span>
               </button>
               <button
-                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
-                ><span class="text-[#D97706]"
-                  ><i class="fa-solid fa-life-ring"></i
-                ></span>
-                <span class="text-[#D97706] font-semibold">HELP WANTED</span>
+                class="border-2 border-[#FDE68A] rounded-full px-1  bg-[#FFF8DB]"
+                >
+                <span class="text-[#D97706]">${issue.labels[1]}</span>
               </button>
             </div>
           </div>
@@ -126,6 +127,82 @@ const displayIssues = (issues) => {
     // 4. append it to the container
     allIssueContainer.append(btnAll);
   }
+};
+
+const loadIssueDetails = async (id) => {
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  displayIssueDetails(details.data);
+};
+
+// {
+//     "id": 1,
+//     "title": "Fix navigation menu on mobile devices",
+//     "description": "The navigation menu doesn't collapse properly on mobile devices. Need to fix the responsive behavior.",
+//     "status": "open",
+//     "labels": [
+//         "bug",
+//         "help wanted"
+//     ],
+//     "priority": "high",
+//     "author": "john_doe",
+//     "assignee": "jane_smith",
+//     "createdAt": "2024-01-15T10:30:00Z",
+//     "updatedAt": "2024-01-15T10:30:00Z"
+// }
+
+const displayIssueDetails = (issue) => {
+  console.log(issue);
+
+  const detailsBox = document.getElementById("details-container");
+  detailsBox.innerHTML = `
+    <h2 class="font-bold text-2xl mb-4">${issue.title}</h2>
+          <div class="flex gap-5 items-center mb-4">
+            <p class="rounded-full px-2 text-white bg-green-600">${issue.status}</p>
+            <p class="font-light text-[12px] text-gray-500">
+              Opened by Fahim Ahmed
+            </p>
+            <p class="font-light text-[12px] text-gray-500">22/02/2026</p>
+          </div>
+          <div class="flex justify-start items-start gap-2 mb-4">
+            <div>
+              <p
+                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
+              >
+                
+                <span class="text-[#EF4444]">${issue.labels[0]}</span>
+              </p>
+            </div>
+            <div>
+              <p
+                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
+              >
+            
+                <span class="text-[#D97706]">${issue.labels[1]}</span>
+              </p>
+            </div>
+          </div>
+
+          <p class="text-gray-500 font-light mb-4">
+            ${issue.description}
+          </p>
+
+          <div
+            class="flex justify-start gap-20 bg-base-200 rounded-md px-10 py-4"
+          >
+            <div class="">
+              <p class="text-gray-500 font-light">Assignee:</p>
+              <h2 class="font-semibold">${issue.assignee}</h2>
+            </div>
+
+            <div class="">
+              <p class="text-gray-500 font-light">Priority:</p>
+              <a class="rounded-full px-4 py-1  ${getPriorityClass(issue.priority)}">${issue.priority}</a>
+            </div>
+          </div>
+    `;
+  document.getElementById("issue_modal").showModal();
 };
 
 const openIssues = () => {
@@ -153,7 +230,7 @@ const displayOpenIssues = (openIssues) => {
     // 3. create element
     const btnOpen = document.createElement("div");
     btnOpen.innerHTML = `
-     <div>
+     <div onclick="loadIssueDetails()">
           <div class="shadow-sm ${"border-green-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
@@ -174,18 +251,14 @@ const displayOpenIssues = (openIssues) => {
 
             <div class="flex justify-start items-start gap-2">
               <button
-                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
-                ><span class="text-[#EF4444]"
-                  ><i class="fa-solid fa-bug"></i
-                ></span>
-                <span class="text-[#EF4444] font-semibold">BUG</span>
+                class="border-2 border-[#FECACA] rounded-full px-1 bg-[#FEECEC]"
+                >
+                <span class="text-[#EF4444]">${issue.labels[0]}</span>
               </button>
               <button
-                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
-                ><span class="text-[#D97706]"
-                  ><i class="fa-solid fa-life-ring"></i
-                ></span>
-                <span class="text-[#D97706] font-semibold">HELP WANTED</span>
+                class="border-2 border-[#FDE68A] rounded-full px-1 bg-[#FFF8DB]"
+                >
+                <span class="text-[#D97706] ">${issue.labels[1]}</span>
               </button>
             </div>
           </div>
@@ -211,7 +284,9 @@ const closedIssues = () => {
 
       // filter open issues
       const closedIssues = issue.filter((issue) => issue.status === "closed");
+
       displayClosedIssues(closedIssues);
+      console.log(closedIssues.length);
     });
 };
 
@@ -225,8 +300,8 @@ const displayClosedIssues = (closedIssues) => {
     // 3. create element
     const btnClosed = document.createElement("div");
     btnClosed.innerHTML = `
-     <div>
-          <div class="shadow-sm ${"border-purple-500 border-t-4"} rounded-md px-5 py-4">
+     <div onclick="loadIssueDetails()">
+          <div  class="shadow-sm ${"border-purple-500 border-t-4"} rounded-md px-5 py-4">
             <div class="flex justify-between items-center mb-4">
               <div>
                 <img src="${"./assets/Closed-Status.png"}" alt="" />
@@ -246,18 +321,14 @@ const displayClosedIssues = (closedIssues) => {
 
             <div class="flex justify-start items-start gap-2">
               <button
-                class="border-2 border-[#FECACA] rounded-full px-3 py-1 bg-[#FEECEC]"
-                ><span class="text-[#EF4444]"
-                  ><i class="fa-solid fa-bug"></i
-                ></span>
-                <span class="text-[#EF4444] font-semibold">BUG</span>
+                class="border-2 border-[#FECACA] rounded-full px-1 bg-[#FEECEC]"
+                >
+                <span class="text-[#EF4444] ">${issue.labels[0]}</span>
               </button>
               <button
-                class="border-2 border-[#FDE68A] rounded-full px-3 py-1 bg-[#FFF8DB]"
-                ><span class="text-[#D97706]"
-                  ><i class="fa-solid fa-life-ring"></i
-                ></span>
-                <span class="text-[#D97706] font-semibold">HELP WANTED</span>
+                class="border-2 border-[#FDE68A] rounded-full px-1 bg-[#FFF8DB]"
+                >
+                <span class="text-[#D97706]">${issue.labels[1]}</span>
               </button>
             </div>
           </div>
