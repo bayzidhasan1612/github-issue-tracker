@@ -40,20 +40,25 @@
   </head>
   <body class="bg-gray-50 min-h-screen">
     <header>
-      <div class="navbar bg-base-100 shadow-sm">
+      <div class="navbar bg-base-100 shadow-sm px-4 md:px-6">
         <div class="flex-1">
           <div class="flex items-center gap-2 w-11/12">
             <div class="h-[36px] w-[37px]">
               <img src="./assets/github-logo.png" class="" alt="" />
             </div>
-            <a class="text-xl font-bold">GitHub Issue Tracker</a>
+            <a class="md:text-xl font-bold">GitHub Issue Tracker</a>
           </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex flex-col md:flex-row gap-2">
           <label class="input">
             <i class="fa-brands fa-sistrix text-gray-500"></i>
 
-            <input id="search-input" type="search" required placeholder="Search Issues" />
+            <input
+              id="search-input"
+              type="search"
+              required
+              placeholder="Search Issues"
+            />
           </label>
           <button id="search-btn" class="btn btn-primary">Search</button>
         </div>
@@ -65,7 +70,7 @@
       id="btn-container"
       class="container w-11/12 mx-auto border border-white p-6 mt-16 bg-base-100 shadow-sm rounded-md"
     >
-      <div class="flex gap-3">
+      <div class="flex flex-wrap gap-2 md:gap-3 lg:gap-4">
         <button
           onclick="allBtnClicked()"
           id="all-btn"
@@ -91,9 +96,9 @@
     </section>
 
     <!-- Loading Spinner -->
-     <section id="spinner" class="flex justify-center items-center py-20 hidden">
+    <section id="spinner" class="flex justify-center items-center py-20 hidden">
       <span class="loading loading-spinner loading-xl"></span>
-     </section>
+    </section>
 
     <!-- Issue Information section -->
     <section
@@ -133,12 +138,12 @@
 
     <!-- All issues -->
     <section
-    id="all-issues"
+      id="all-issues"
       class="container w-11/12 mx-auto border border-white p-6 mt-1 bg-base-100 shadow-sm rounded-sm"
     >
       <div
         id="all-issue-container"
-        class="grid grid-cols-4 gap-3 space-y-4 bg-white"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 space-y-4 bg-white"
       >
         <!-- issue card -->
       </div>
